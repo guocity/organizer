@@ -1,5 +1,7 @@
 # Organizer
 
+![alt text](image.png)
+
 Organizer is a local-first desktop hub designed to extract data from websites, store it in structured local SQLite databases, and visualize it using interactive, sandboxed canvases. 
 
 It features a built-in AI coding agent (the "harness operator") that can automatically write scrapers, database schemas, data transformation scripts, and frontend visualization boards for you.
