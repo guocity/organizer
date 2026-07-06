@@ -3,83 +3,244 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Organizer Privacy Policy</title>
+  <title>Organizer — Privacy Policy</title>
+  <meta name="description" content="Privacy Policy for Organizer — a secure, local-first document scanner and organizer for iPhone.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      color-scheme: light dark;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.55;
+      --bg-color: #ffffff;
+      --bg-secondary: #f5f5f7;
+      --card-bg: #ffffff;
+      --card-border: rgba(0, 0, 0, 0.06);
+      --text-primary: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --accent: #007aff;
+      --font-title: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.05);
     }
 
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      color: CanvasText;
-      background: Canvas;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Background Light Glow Effects */
+    .glow-container {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 600px;
+      overflow: hidden;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .glow-1 {
+      position: absolute;
+      top: -200px;
+      left: 10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0, 102, 204, 0.04) 0%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(60px);
+    }
+
+    header {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 1.5rem;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+      margin-bottom: 2rem;
+    }
+
+    .btn-back:hover {
+      color: var(--text-primary);
+    }
+
+    .btn-back svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
     }
 
     main {
-      width: min(100% - 2rem, 44rem);
+      width: 100%;
+      max-width: 800px;
       margin: 0 auto;
-      padding: 3rem 0;
+      padding: 0 1.5rem 6rem;
+    }
+
+    .policy-container {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 3rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    @media (max-width: 576px) {
+      .policy-container {
+        padding: 2rem 1.5rem;
+      }
     }
 
     h1 {
-      margin: 0 0 0.5rem;
-      font-size: 2rem;
+      font-family: var(--font-title);
+      font-size: 2.5rem;
+      font-weight: 800;
       line-height: 1.15;
+      margin-bottom: 0.5rem;
+      letter-spacing: -1px;
+      color: var(--text-primary);
     }
 
-    h2 {
-      margin-top: 2rem;
-      font-size: 1.25rem;
-    }
-
-    p,
-    li {
-      font-size: 1rem;
+    @media (max-width: 576px) {
+      h1 {
+        font-size: 2rem;
+      }
     }
 
     .updated {
-      margin-top: 0;
-      color: GrayText;
+      margin-bottom: 2.5rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    h2 {
+      font-family: var(--font-title);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      color: var(--text-primary);
+    }
+
+    p, li {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    a {
+      color: #0066cc;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    a:hover {
+      border-color: #0066cc;
+    }
+
+    footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      background: #f5f5f7;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    footer a {
+      color: var(--text-secondary);
+      margin: 0 0.75rem;
+      text-decoration: none;
+    }
+    
+    footer a:hover {
+      color: var(--text-primary);
     }
   </style>
 </head>
 <body>
+
+  <!-- Ambient Light Glow -->
+  <div class="glow-container" aria-hidden="true">
+    <div class="glow-1"></div>
+  </div>
+
+  <header>
+    <a href="index.html" class="btn-back">
+      <svg viewBox="0 0 24 24">
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+      </svg>
+      Back to Home
+    </a>
+  </header>
+
   <main>
-    <h1>Organizer Privacy Policy</h1>
-    <p class="updated">Last updated: July 6, 2026</p>
+    <div class="policy-container">
+      <h1>Organizer Privacy Policy</h1>
+      <p class="updated">Last updated: July 6, 2026</p>
 
-    <p>
-      Organizer does not collect, transmit, sell, or share any personal data.
-      The app has no accounts, analytics, advertising, or third-party tracking.
-    </p>
+      <p>
+        Organizer does not collect, transmit, sell, or share any personal data.
+        The app has no accounts, analytics, advertising, or third-party tracking.
+      </p>
 
-    <h2>Documents and Metadata</h2>
-    <p>
-      Documents you scan, extracted text, summaries, tags, and related metadata
-      are stored only on your device. If you choose to use iCloud Drive or the
-      Files app to sync or back up your documents, that storage is controlled by
-      your Apple account and device settings.
-    </p>
+      <h2>Documents and Metadata</h2>
+      <p>
+        Documents you scan, extracted text, summaries, tags, and related metadata
+        are stored only on your device. If you choose to use iCloud Drive or the
+        Files app to sync or back up your documents, that storage is controlled by
+        your Apple account and device settings.
+      </p>
 
-    <h2>Camera and Face ID</h2>
-    <p>
-      Camera access is used solely to scan documents. Face ID is used solely to
-      unlock Organizer when App Lock is enabled. Organizer does not receive or
-      store biometric data.
-    </p>
+      <h2>Camera and Face ID</h2>
+      <p>
+        Camera access is used solely to scan documents. Face ID is used solely to
+        unlock Organizer when App Lock is enabled. Organizer does not receive or
+        store biometric data.
+      </p>
 
-    <h2>On-Device Processing</h2>
-    <p>
-      OCR, document naming, classification, and field extraction run on device.
-      Organizer does not upload your documents or extracted text to a server.
-    </p>
+      <h2>On-Device Processing</h2>
+      <p>
+        OCR, document naming, classification, and field extraction run on device.
+        Organizer does not upload your documents or extracted text to a server.
+      </p>
 
-    <h2>Contact</h2>
-    <p>
-      For privacy or support questions, contact <a href="mailto:leon@faanj.org">leon@faanj.org</a>.
-    </p>
+    </div>
   </main>
+
+  <footer>
+    <p>&copy; 2026 Organizer. Created by Leon. All rights reserved.</p>
+    <p style="margin-top: 0.5rem;">
+      <a href="index.html">Home</a>
+    </p>
+  </footer>
+
 </body>
 </html>
