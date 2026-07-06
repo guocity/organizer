@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>Organizer — Local-First Document Scanner & Privacy-Centric Hub for iPhone</title>
+  <meta name="description" content="Organizer is a secure, local-first document scanner and organizer for iPhone. Scan documents, extract text via on-device OCR, categorize with tags, and protect files with Face ID. 100% private.">
+  
+  <!-- SEO & Social Meta Tags -->
+  <meta property="og:title" content="Organizer — Local-First Document Scanner for iPhone">
+  <meta property="og:description" content="Securely scan, organize, and search your documents on-device. No accounts, no trackers, complete privacy.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://organizer.lgnat.com">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --bg-secondary: #f5f5f7;
+      --card-bg: #ffffff;
+      --card-border: rgba(0, 0, 0, 0.06);
+      --text-primary: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --accent: #007aff;
+      --accent-glow: rgba(0, 122, 255, 0.1);
+      --accent-gradient: linear-gradient(135deg, #0066cc 0%, #5856d6 100%);
+      --accent-gradient-hover: linear-gradient(135deg, #0077ed 0%, #6e6cf0 100%);
+      --font-title: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Soft light backgrounds glow */
+    .glow-container {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 1000px;
+      overflow: hidden;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .glow-1 {
+      position: absolute;
+      top: -250px;
+      left: 15%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(0, 102, 204, 0.06) 0%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(60px);
+    }
+
+    .glow-2 {
+      position: absolute;
+      top: 150px;
+      right: 10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(88, 86, 214, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(60px);
+    }
+
+    /* Navigation */
+    header {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 9px;
+      box-shadow: var(--shadow-sm), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    }
+
+    .app-logo-text {
+      font-family: var(--font-title);
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: -0.5px;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--text-primary);
+    }
+
+    nav a.btn-nav-download {
+      background: var(--text-primary);
+      color: var(--bg-color);
+      padding: 0.5rem 1.25rem;
+      border-radius: 99px;
+      font-weight: 600;
+      transition: opacity 0.2s ease;
+    }
+
+    nav a.btn-nav-download:hover {
+      opacity: 0.9;
+    }
+
+    /* Hero Section */
+    .hero {
+      max-width: 1200px;
+      margin: 3rem auto 6rem;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 4rem;
+    }
+
+    @media (max-width: 968px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 4rem;
+        margin-top: 1.5rem;
+      }
+    }
+
+    .hero-content {
+      max-width: 600px;
+    }
+
+    @media (max-width: 968px) {
+      .hero-content {
+        margin: 0 auto;
+      }
+    }
+
+    .tagline-badge {
+      display: inline-block;
+      padding: 0.4rem 0.9rem;
+      background: rgba(0, 102, 204, 0.08);
+      border: 1px solid rgba(0, 102, 204, 0.15);
+      border-radius: 99px;
+      color: #0066cc;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-title);
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    .hero-title span {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    @media (max-width: 576px) {
+      .hero-title {
+        font-size: 2.75rem;
+      }
+    }
+
+    .hero-description {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+    }
+
+    /* App Store Button */
+    .store-buttons {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    @media (max-width: 968px) {
+      .store-buttons {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .store-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    .btn-appstore {
+      display: inline-flex;
+      align-items: center;
+      background: #000;
+      color: #fff;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      transition: background-color 0.2s, transform 0.2s;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-appstore:hover {
+      background: #1c1c1e;
+      transform: translateY(-2px);
+    }
+
+    .btn-appstore svg {
+      margin-right: 0.75rem;
+      width: 24px;
+      height: 24px;
+    }
+
+    .btn-appstore-text {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .btn-appstore-text .subtext {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #a1a1aa;
+    }
+
+    .btn-appstore-text .maintext {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .privacy-badge-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .privacy-badge-link:hover {
+      color: var(--text-primary);
+    }
+
+    .privacy-badge-link svg {
+      width: 18px;
+      height: 18px;
+      fill: #34c759;
+    }
+
+    /* iPhone Mockup (Real Screenshot Container) */
+    .iphone-showcase {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .iphone-container {
+      width: 290px;
+      height: 590px;
+      background: #fbfbfd;
+      border-radius: 42px;
+      padding: 10px;
+      box-shadow: 
+        0px 30px 60px -15px rgba(0, 0, 0, 0.15),
+        0px 0px 0px 4px #e5e5ea,
+        0px 0px 0px 1px #8e8e93;
+      position: relative;
+    }
+
+    /* Dynamic Island */
+    .iphone-island {
+      width: 90px;
+      height: 26px;
+      background: #000;
+      border-radius: 15px;
+      position: absolute;
+      top: 17px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+
+    /* Screen Content */
+    .iphone-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 34px;
+      overflow: hidden;
+      position: relative;
+      background: #fff;
+      border: 1px solid #e5e5ea;
+    }
+
+    .iphone-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Features Section */
+    .features-section {
+      background-color: var(--bg-secondary);
+      padding: 6rem 1.5rem;
+      border-top: 1px solid rgba(0,0,0,0.04);
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 4rem;
+    }
+
+    .section-title {
+      font-family: var(--font-title);
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .section-description {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2.25rem 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(0, 102, 204, 0.05);
+      border: 1px solid rgba(0, 102, 204, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: #0066cc;
+    }
+
+    .feature-card:hover .feature-icon {
+      color: #007aff;
+      background: rgba(0, 122, 255, 0.08);
+      border-color: rgba(0, 122, 255, 0.2);
+    }
+
+    .feature-card-title {
+      font-family: var(--font-title);
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+    }
+
+    .feature-card-description {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    /* Showcase Gallery Section */
+    .gallery-section {
+      max-width: 1200px;
+      margin: 6rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 868px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+    }
+
+    .gallery-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    @media (max-width: 868px) {
+      .gallery-item {
+        align-items: center;
+        text-align: center;
+      }
+    }
+
+    .gallery-text {
+      max-width: 480px;
+    }
+
+    .gallery-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #0066cc;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+
+    .gallery-title {
+      font-family: var(--font-title);
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 1rem;
+    }
+
+    .gallery-description {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Privacy Promise Section */
+    .privacy-promise {
+      max-width: 1168px;
+      margin: 6rem auto 8rem;
+      padding: 4rem 3rem;
+      background: radial-gradient(circle at 10% 20%, rgba(52, 199, 89, 0.05) 0%, transparent 80%), #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      box-shadow: var(--shadow-md);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .privacy-promise {
+        grid-template-columns: 1fr;
+        padding: 3rem 2rem;
+        gap: 2rem;
+        text-align: center;
+      }
+    }
+
+    .privacy-title {
+      font-family: var(--font-title);
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    .privacy-title span {
+      color: #34c759;
+    }
+
+    .privacy-text p {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+    
+    .privacy-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .btn-privacy {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #34c759;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      border-bottom: 1.5px solid transparent;
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .btn-privacy:hover {
+      border-color: #34c759;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      background: #f5f5f7;
+      padding: 4rem 1.5rem;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-brand-title {
+      font-family: var(--font-title);
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    .footer-brand-sub {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .footer-links {
+        justify-content: center;
+      }
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .footer-copy {
+      width: 100%;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #8e8e93;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Light Glow Effects -->
+  <div class="glow-container" aria-hidden="true">
+    <div class="glow-1"></div>
+    <div class="glow-2"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <a href="#" class="logo-container" aria-label="Organizer Home">
+      <img src="assets/app-icon.png" alt="Organizer App Icon" class="logo-img">
+      <span class="app-logo-text">Organizer</span>
+    </a>
+    
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#showcase">Showcase</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="#" class="btn-nav-download">Join Beta</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="hero">
+    <div class="hero-content">
+      <span class="tagline-badge">Now in TestFlight Beta</span>
+      <h1 class="hero-title">Your documents, organized. <span>Securely on device.</span></h1>
+      <p class="hero-description">
+        Organizer is a clean, modern, and local-first document scanner for iPhone. 
+        Instantly capture files, extract metadata using secure on-device OCR, and structure 
+        your records—without ever sending your private documents to the cloud.
+      </p>
+      
+      <div class="store-buttons">
+        <a href="#" class="btn-appstore" aria-label="Join Organizer Beta on TestFlight">
+          <!-- TestFlight Propeller Logo in SVG -->
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="12" r="3" />
+            <path d="M12 2a2 2 0 0 1 2 2v4a2 2 0 0 1-4 0V4a2 2 0 0 1 2-2z" />
+            <path d="M3.3 17a2 2 0 0 1 0-2.8l3.5-2a2 2 0 0 1 2 3.5l-3.5 2a2 2 0 0 1-2-.7z" />
+            <path d="M20.7 17a2 2 0 0 1-2 .7l-3.5-2a2 2 0 0 1 2-3.5l3.5 2a2 2 0 0 1 0 2.8z" />
+          </svg>
+          <div class="btn-appstore-text">
+            <span class="subtext">Join the Beta on</span>
+            <span class="maintext">TestFlight</span>
+          </div>
+        </a>
+        
+        <a href="privacy.html" class="privacy-badge-link">
+          <svg viewBox="0 0 20 20">
+            <path d="M10 2s5 1.5 5 6c0 4.5-3.5 7.5-5 9-1.5-1.5-5-4.5-5-9 0-4.5 5-6 5-6zm0 1.9c-.8.6-3 1.9-3 4.1 0 2.8 1.9 4.9 3 5.9 1.1-1 3-3.1 3-5.9 0-2.2-2.2-3.5-3-4.1z" />
+          </svg>
+          Zero trackers or analytics
+        </a>
+      </div>
+    </div>
+
+    <!-- Phone Showcase (Main Documents Screen) -->
+    <div class="iphone-showcase">
+      <div class="iphone-container">
+        <div class="iphone-island"></div>
+        <div class="iphone-screen">
+          <img src="assets/01-documents-light.png" alt="Organizer Documents Screen Screenshot">
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Features Section -->
+  <section class="features-section" id="features">
+    <div class="features-container">
+      <div class="section-header">
+        <h2 class="section-title">Designed for Ultimate Utility</h2>
+        <p class="section-description">
+          No accounts. No server synchronization. All intelligent operations happen entirely on your phone.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <!-- On-Device Scanner -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <line x1="10" y1="9" x2="8" y2="9"/>
+            </svg>
+          </div>
+          <h3 class="feature-card-title">On-Device Camera Scanner</h3>
+          <p class="feature-card-description">
+            Leverage high-precision camera capture to scan receipts, invoices, contracts, or handwritten notes. Features automatic document boundary detection and real-time perspective correction.
+          </p>
+        </div>
+
+        <!-- Local OCR -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+              <path d="M12 6v12"/>
+              <path d="M8 10h8"/>
+              <path d="M8 14h8"/>
+            </svg>
+          </div>
+          <h3 class="feature-card-title">Local OCR & Metadata Extraction</h3>
+          <p class="feature-card-description">
+            Extract text and content structure natively on your device. Organizer local text models auto-fill invoice dates, tags, values, and vendor names without sending a single byte online.
+          </p>
+        </div>
+
+        <!-- Complete Privacy -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3 class="feature-card-title">100% Privacy by Design</h3>
+          <p class="feature-card-description">
+            Organizer does not compile telemetry, track features, or run analytic libraries. The app operates completely isolated, keeping your documents and metadata entirely your own.
+          </p>
+        </div>
+
+        <!-- Biometric Security -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <h3 class="feature-card-title">Biometric App Locking</h3>
+          <p class="feature-card-description">
+            Secure access to your records with Apple Face ID or Touch ID lock support. Ensure sensitive files remain unreadable even if your phone is unlocked.
+          </p>
+        </div>
+
+        <!-- iCloud Drive sync -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+            </svg>
+          </div>
+          <h3 class="feature-card-title">Secure iCloud Synchronization</h3>
+          <p class="feature-card-description">
+            Sync documents across your iPhone, iPad, and Apple ecosystem securely using your personal iCloud Drive account. Backup and syncing are fully controlled by you.
+          </p>
+        </div>
+
+        <!-- Instant Offline Search -->
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </div>
+          <h3 class="feature-card-title">Instant Offline Search</h3>
+          <p class="feature-card-description">
+            Search the complete text content of every document you scan. Thanks to on-device OCR indexing, you can query terms inside any receipt or PDF within milliseconds.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Showcase Gallery -->
+  <section class="gallery-section" id="showcase">
+    <div class="gallery-grid">
+      <!-- Item 1: Details -->
+      <div class="gallery-item">
+        <div class="iphone-container">
+          <div class="iphone-island"></div>
+          <div class="iphone-screen">
+            <img src="assets/03-receipt-detail.png" alt="Organizer Receipt Details Screen Screenshot">
+          </div>
+        </div>
+        <div class="gallery-text">
+          <span class="gallery-label">Deep Extraction</span>
+          <h3 class="gallery-title">Structured Data, Instantly.</h3>
+          <p class="gallery-description">
+            Tap on any scan to inspect OCR-extracted text, automatic tax breakdown, and smart totals. Organizer tags information intelligently to keep search fast and accurate.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 2: Settings -->
+      <div class="gallery-item">
+        <div class="iphone-container">
+          <div class="iphone-island"></div>
+          <div class="iphone-screen">
+            <img src="assets/05-settings.png" alt="Organizer Settings Screen Screenshot">
+          </div>
+        </div>
+        <div class="gallery-text">
+          <span class="gallery-label">Absolute Control</span>
+          <h3 class="gallery-title">Personal Sync & Security</h3>
+          <p class="gallery-description">
+            Toggle biometric App Lock, configure iCloud Sync to keep your data backed up across devices, and manage on-device text recognition packages directly from settings.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy Promise Section -->
+  <section class="privacy-promise">
+    <div class="privacy-title">
+      Our Promise: <br>
+      <span>Your data is yours. Period.</span>
+    </div>
+    <div class="privacy-text">
+      <p>
+        In an era of mandatory cloud accounts and aggressive web trackers, Organizer stays offline. 
+        We do not collect passwords, tracking codes, scanning behaviors, or document content.
+      </p>
+      <p>
+        Everything is compiled, analyzed, and stored locally on your device's filesystem.
+      </p>
+      <a href="privacy.html" class="btn-privacy">
+        Read Our Plain-English Privacy Policy
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="footer-brand-title">Organizer</div>
+        <div class="footer-brand-sub">Privacy-centric document scanning for iOS.</div>
+      </div>
+      
+      <div class="footer-links">
+        <a href="#features">Features</a>
+        <a href="#showcase">Showcase</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="#" id="contact-link">Support / Contact</a>
+      </div>
+    </div>
+    <div class="footer-copy">
+      &copy; 2026 Organizer. Created by Leon. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const contactLink = document.getElementById("contact-link");
+      if (contactLink) {
+        contactLink.addEventListener("click", function(e) {
+          e.preventDefault();
+          window.location.href = "mailto:" + atob("bGVvbkBmYWFvai5vcmc=");
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
