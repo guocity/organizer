@@ -456,12 +456,12 @@
 
     .gallery-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      align-items: flex-start;
     }
 
-    @media (max-width: 868px) {
+    @media (max-width: 968px) {
       .gallery-grid {
         grid-template-columns: 1fr;
         gap: 4rem;
@@ -834,7 +834,24 @@
         </div>
       </div>
 
-      <!-- Item 2: Settings -->
+      <!-- Item 2: Business Cards -->
+      <div class="gallery-item">
+        <div class="iphone-container">
+          <div class="iphone-island"></div>
+          <div class="iphone-screen">
+            <img src="assets/04-business-card.png" alt="Organizer Business Card Screen Screenshot">
+          </div>
+        </div>
+        <div class="gallery-text">
+          <span class="gallery-label">Smart Contacts</span>
+          <h3 class="gallery-title">Scan Business Cards</h3>
+          <p class="gallery-description">
+            Automatically detect business cards, extract phone numbers, emails, addresses, and company details, and save them straight to your phone's local database.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 3: Settings -->
       <div class="gallery-item">
         <div class="iphone-container">
           <div class="iphone-island"></div>
